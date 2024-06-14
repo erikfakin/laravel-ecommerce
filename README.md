@@ -1,4 +1,4 @@
-# ecommerce aplikacija u Laravelu - Tutorial
+# Ecommerce aplikacija u Laravelu - Tutorial
 
 Ovo je tutorial za izradu jednostavnu ecommerce aplikaciju. 
 Tutorial ću napisati korak po korak, objašnjavajući svoje razmišljanje. Bit će to samo jedan način na kojem se stvari mogu riješiti, slobodno prilagodite korake svom načinu rada i razmišljanja. 
@@ -16,7 +16,7 @@ Funkcijonalnosti koje ću uključivati u ovom projektu su sljedeće:
 - administracijski panel: za upravljanje stranicom
 
 Mogućnosti su beskonačne. Odlučio sam uključivati samo ove funkcije zbog vremenskih ograničenja.
-
+___
 ## Entiteti
 
 ### Product
@@ -39,6 +39,7 @@ Mogućnosti su beskonačne. Odlučio sam uključivati samo ove funkcije zbog vre
 |-----------------|----------------------|-------------------------------------------|
 | `id`            | `unsignedBigInteger` | Primarni ključ                            |
 | `name`          | `string`             | Naziv kategorije                          |
+| `slug`          | `string`             | Slug, dio url koji ćemo kmoristiti za tu kategoriju kako nebismo koristili id ili nešto drugo. |
 | `description`   | `text`               | Opis kategorije                           |
 | `created_at`    | `timestamp`          |                                           |
 | `updated_at`    | `timestamp`          |                                           |
@@ -71,9 +72,9 @@ Mogućnosti su beskonačne. Odlučio sam uključivati samo ove funkcije zbog vre
 
 | Naziv Atributa  | Tip Podatka          | Opis                                      |
 |-----------------|----------------------|-------------------------------------------|
-| `.`             | `unsignedBigInteger`  | Default Laravel atributi za usera.        |
-| `.`             | `string`                |                                           |
-| `.`             | `string`                 |                                           |
+| `.`             |   | Default Laravel atributi za usera.        |
+| `.`             |                |                                           |
+| `.`             |                 |                                           |
 | `is_admin`      | `boolean`            | Da li je korisnik administrator, default `false`. |
 
 ## Tablice za relacije
@@ -101,3 +102,109 @@ Isto tako ćemo napraviti za relaciju order i user:
 | `user_id`    | `unsignedBigInteger`    | Referenca na user                         |
 | `created_at`    | `timestamp`          |                                           |
 | `updated_at`    | `timestamp`          |                                           |
+___
+
+## Korak 1 - migracije
+
+U ovom ćemo koraku kreirati modele i migracije za Product, Category i Image. Moramo paziti na redosljedu jer Product
+ima strani ključ za kategoriju i za sliku proizvoda.
+
+### Image
+
+```
+# generirati ćemo model, migraciju i controller odjednom
+php artisan make:model Image -mc
+```
+
+U migraciji dodati ćemo potrebna polja:
+
+```
+# file database\migrations\####_##_##_######_create_images_table.php
+        .
+        .
+        .
+
+        Schema::create('images', function (Blueprint $table) {
+            $table->id();
+            $table->text('alt')->nullable();
+            $table->string('src');
+            $table->timestamps();
+        });
+```
+
+### Category
+
+```
+# generirati ćemo model, migraciju i controller odjednom
+php artisan make:model Category -mc
+```
+
+U migraciji dodati ćemo potrebna polja:
+
+```
+# file database\migrations\####_##_##_######_create_categories_table.php
+        .
+        .
+        .
+
+        Schema::create('categories', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('slug');
+            $table->text('description');
+            $table->timestamps();
+        });
+
+```
+
+### Product
+
+```
+# generirati ćemo model, migraciju i controller odjednom
+php artisan make:model Product -mc
+```
+
+U migraciji dodati ćemo potrebna polja:
+
+```
+# file database\migrations\####_##_##_######_create_products_table.php
+        .
+        .
+        .
+
+        Schema::create('products', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->text('description')->nullable();
+            $table->decimal('price', 8, 2);
+            $table->foreignId('image_id')->nullable()->constrained();
+            $table->foreignId('category_id')->constrained();
+            $table->timestamps();
+        });
+
+```
+
+### User
+
+U default migraciju za Usera morat ćemo dodati još jedno polje is_admin.
+
+
+
+```
+# file database\migrations\0001_01_01_000000_create_users_table.php
+        .
+        .
+        .
+
+        Schema::create('users', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('email')->unique();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            $table->rememberToken();
+            $table->boolean('is_admin')->default(false); // dodali smo ovo
+            $table->timestamps();
+        });
+
+```
