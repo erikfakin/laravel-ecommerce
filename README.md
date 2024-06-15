@@ -132,7 +132,7 @@ Nakon toga moram pokrenuti npm skriptu za development kako bi mi se dtranica pri
 `npm run dev`
 
 __
-## Korak 2 - migracije
+## Korak 2 - migracije i modeli
 
 U ovom ćemo koraku kreirati modele i migracije za Product, Category i Image. Moramo paziti na redosljed jer Product
 ima strani ključ za kategoriju i za sliku proizvoda.
@@ -235,6 +235,224 @@ file database\migrations\0001_01_01_000000_create_users_table.php
 
 ```
 
+### Modeli
+
+Kako bismo povezali modele međusobno, moramo dodati relacije. Svaki proizvod imat će sliku proizvoda i pripadajuću kategoriju.
+Oba dvije relacije su 1 prema više.
+
+U modelima također trebamo dodati $fillable svojstva kako bismo mogli masovno dodijeliti svojstva.
+
+Kako bismo mogli preko proizvoda dobiti njegovu kategoriju i sliku moramo u modelu Product dodati:
+
+file - app\Models\Product.php
+
+```
+class Product extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'description',
+        'price',
+        'image_id',
+        'category_id'
+    ];
+
+
+    /**
+     * Get the category of the product.
+     */
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    /**
+     * Get the category of the product.
+     */
+    public function image(): BelongsTo
+    {
+        return $this->belongsTo(Image::class);
+    }
+}
+```
+
+U modelu Category i Image relacija je obrnuta. Jedna kategorija može imati puno proizvoda, jedna slika može imati više proizvoda koju je koristi.
+
+U modelu Image nismo zainteresirani dobiti sve proizvode koje koriste jednu sliku, pa nećemo ni dodati relaciju modelu. 
+Dodati ćemo samo $fillable svojstva.
+
+file - file - app\Models\Image.php
+```
+class Image extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'alt',
+        'src'
+    ];
+
+}
+```
+
+U modelu Category trebat će nam relacija kako bismo mogli dobiti sve proizvode iz jedne kategorije. Dodat ćemo i $fillable svojstva.
+
+file - file - app\Models\Category.php
+```
+class Category extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'slug',
+        'description'
+    ];
+
+    /**
+     * Get the products for the blog category.
+     */
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class);
+    }
+}
+```
+
+### Seedanje
+
+Kako bismo lakše kreirali poglede u sljedećem koraku, dodat ćemo par kategorija, slika i proizvoda.
+Dodat ćemo ih koristeći seedere.
+
+Moramo prije toga 'otvoriti' javni disk, kako bi korisnici mogli vidjeti slike proizvoda. Slike ćemo tako spremati na public disku u folderu images.
+Na dokumentaciji možemo pronaći sljedeće [link](https://laravel.com/docs/11.x/filesystem#the-public-disk)
+
+Za aktivirati public disk pokrećemo:
+
+`php artisan storage:link`
+
+Nakon toga možemo poćeti sa seederima. U folderu storage\app\public\images dodao sam par slika koje ćemo povezati s Image modelom.
+
+Za kreirati seeder koristimo:
+`php artisan make:seeder ImageSeeder`
+`php artisan make:seeder CategorySeeder`
+`php artisan make:seeder ProductSeeder`
+
+U seederima kreirati ćemo par slika, kategorija i proizvoda:
+
+file - database\seeders\ImageSeeder.php
+
+```
+/**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        $image = Image::create([
+            'alt' => 'Savage Gear SGS2 All-Around Stap',
+            'src' => '/images/Savage Gear SGS2 All-Around.png'
+        ]);
+
+        $image->id = 1; // kako bismo u seeder za porivod mogli direktno koristiti image_id = 1 za ovu sliku.
+        $image->save();
+
+        $image = Image::create([
+            'alt' => 'DTD Panic Shad 16g 120 Combo',
+            'src' => '/images/DTD Panic Shad 16g 120 Combo.jpg'
+        ]);
+
+        $image->id = 2;
+        $image->save();
+
+        $image = Image::create([
+            'alt' => 'Varivas Shock Leader',
+            'src' => '/images/Varivas Shock Leader.jpg'
+        ]);
+
+        $image->id = 3;
+        $image->save();
+    }
+```
+file - database\seeders\CategorySeeder.php
+```
+    public function run(): void
+    {
+        $category = Category::create([
+            'name' => 'Štapovi',
+            'slug' => 'stapovi',
+            'description' => 'Ribolovni štapovi.'
+        ]);
+
+        $category->id = 1;
+        $category->save();
+
+        $category = Category::create([
+            'name' => 'Varalice',
+            'slug' => 'varalice',
+            'description' => 'Varalice za ribolov.'
+        ]);
+
+        $category->id = 2;
+        $category->save();
+
+        $category = Category::create([
+            'name' => 'Najloni',
+            'slug' => 'najloni',
+            'description' => 'Najloni za ribolov.'
+        ]);
+
+        $category->id = 3;
+        $category->save();
+    }
+```
+file - database\seeders\ProductSeeder.php
+```
+ public function run(): void
+    {
+        Product::create([
+            'name' => 'Savage Gear SGS2 All-Around',
+            'description' => 'Savage Gear SGS2 All-Around Štapovi srednje duljine nude savršenu ravnotežu udaljenosti i točnosti zabacivanja, što ih čini idealnim za čitav niz različitih mjesta za ribolov u morskoj vodi uključujući luke, stijene i plaže. Omogućuju preciznu kontrolu tvrdih i mekih mamaca i, ovisno o težini bacanja koju odaberete, mogu se koristiti za ciljanje na mnoge različite vrste uključujući brancina, plavu ribu, palamide...',
+            'price' => 84.81,
+            'image_id' => 1,
+            'category_id' => 1
+        ]);
+
+        Product::create([
+            'name' => 'Silikonac DTD Panic Shad 16g 120 Combo + body',
+            'description' => 'Silikonac DTD Panic Shad 16g 120 Combo + body je novost iz DTD-a za 2023 godinu namjenjen lovu brancina opremljen Decoy udicom i proizveden u Japanu.',
+            'price' => 6.50,
+            'image_id' => 2,
+            'category_id' => 2
+        ]);
+
+        Product::create([
+            'name' => 'Fluorocarbon 100% Varivas Shock Leader',
+            'description' => 'VARIVAS Fluorocarbon Shock Leader je tvrda, vrlo procizan leader otporan na abraziju dizajniran posebno za napredne ribolovne tehnike kao što su snažno vrtenje, popping, duboki jigging i ribolov na dnu. Uz izvrsnu otpornost na abraziju za zaštitu od kontakta sa kamenjem, zubima, perajama i dnom čamaca, također ima visoku otpornost na udarce. Uz gotovo nultu vidljivost, materijal od 100% fluorocarbona nestaje u vodi. Ovaj leader se preporučuje za ribolov na tune.
+Napravljeno u Japanu.',
+            'price' => 10.50,
+            'image_id' => 3,
+            'category_id' => 3
+        ]);
+    }
+```
+
+Sad kad smo namijestili seedere moramo iste dodati u run metodi database\seeders\DatabaseSeeder.php kako bi ste iste pokrenuli kada seedamo bazu.
+
+file - database\seeders\DatabaseSeeder.php
+
+```
+    public function run(): void
+    {
+
+        $this->call([
+            ImageSeeder::class,
+            CategorySeeder::class,
+            ProductSeeder::class,
+        ]);
+    }
+```
 
 ## Korak 3 - Routing
 
