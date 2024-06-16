@@ -1216,6 +1216,8 @@ U kontroleru validairamo podatke koje smo poslali put metodom, spremamo novu sli
 
 Sad možemo ići na /products/create, dodati novi proizvod i moći ga vidjeti u popisu svih proizvoda.
 
+### Forma za uređivanje proizvoda
+
 Ajmo sada napraviti formu za izmjenu proizvoda. Rutu za formu postavili smo je ranije /products/edit/{product} koja nas đšalje na metodu edit kontrolera ProductController. Ajmo urediti metodu.
 
 file - app\Http\Controllers\ProductController.php
@@ -1363,6 +1365,9 @@ file - app\Http\Controllers\ProductController.php
 
 Sad možemo urediti pogledati, dodati i urediti proizvode. Fali još samo način za ih obrisati. Za brisanje spremili smo već rutu DELETE /products/{product}. Ruta vodi na metodu `destroy` kotrolera ProductController.
 
+### Tipka za brisanje proizvoda
+
+
 Ideja je napraviti komponentu koja će izgledati kao tipka na kojoj će pisati "Obriši" i kad kliknemo na obriši da se otvori prozor koji će nas pitat za potvrdu. Kad potvrdimo onda se forma submita.
 
 Spremimo prije kontroler koji je jednostavniji:
@@ -1460,6 +1465,8 @@ file - resources\views\products\show.blade.php
 Kad smo isporbali možemo izbrisati tipku iz ovog pogleda.
 
 Sad imamo sve osnovne funkcijonbalnosti za proizvod. Možemo kreirati, urediti, brisati i pregledati proizvode.
+
+### Dodavanje autorizacije
 
 Ajmo sada zaštiti rute kako bi mogli samo admini kreirati, urediti i brisati proizvode.
 Za to koristit ćemo middleware.
