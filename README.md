@@ -704,6 +704,8 @@ file - resources\views\products\index.blade.php
 
 Sad kad idemo na rutu /products trebali bismo vidijeti 3 proizvoda kojih smo dadali pomoću seedera.
 
+### Kartica za prikaz proizvoda
+
 Karticu za proizvod koristit ćemo i u drugim pogledima pa bi bilo korisno da istu premijestimo u svoju komponentu. Kreirat ćemo folder resources\views\components\products u kojem ćemo spremati sve komponente vezane za proizvode.
 
 U folderu resources\views\components\products ćemo onda stvoriti file resources\views\components\products\card.blade.php koji će nam služiti za prikaz proivoda u kartici.
@@ -735,6 +737,8 @@ file - resources\views\components\products\card.blade.php
     </div>
 </a>
 ```
+
+### Tipka za dodavanje u košaricu
 
 Button za dodat u košaricu možemo također izolirati u svoju komponentu pošto ćemo je prikazivatio na više mjesta, npr u stranici proizvoda, na listi proizvoda itd.
 
@@ -778,8 +782,6 @@ file - resources\views\components\products\card.blade.php
 ```
 
 
-
-
 Kako možemo viditi komponenta očekuje varijablu $product. Sad ćemo izmjeniti pogled resources\views\products\index.blade.php i zamijeniti dio kartice s novom komponentu.
 
 file - resources\views\products\index.blade.php
@@ -787,7 +789,7 @@ file - resources\views\products\index.blade.php
 <x-app-layout>
     <x-slot:header>
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Svi proizvodi') }}
+            {{ Svi proizvodi }}
         </h2>
     </x-slot>
 
