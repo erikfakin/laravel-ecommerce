@@ -22,12 +22,13 @@ Route::middleware('auth')->group(function () {
 
 Route::prefix('products')->group(function () {
     Route::get('/', [ProductController::class, 'index'])->name('products.index');
-    Route::get('/create', [ProductController::class, 'create'])->name('products.create');
-    Route::post('/', [ProductController::class, 'store'])->name('products.store');
+    Route::get('/category/{categorySlug}', [ProductController::class, 'category'])->name('products.category');
+    Route::get('/create', [ProductController::class, 'create'])->name('products.create')->middleware(['auth', 'isAdmin']);
+    Route::post('/', [ProductController::class, 'store'])->name('products.store')->middleware(['auth', 'isAdmin']);;
     Route::get('/{product}', [ProductController::class, 'show'])->name('products.show');
-    Route::get('/edit/{product}', [ProductController::class, 'edit'])->name('products.edit');
-    Route::put('/{product}', [ProductController::class, 'update'])->name('products.update');
-    Route::delete('/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
+    Route::get('/edit/{product}', [ProductController::class, 'edit'])->name('products.edit')->middleware(['auth', 'isAdmin']);;
+    Route::put('/{product}', [ProductController::class, 'update'])->name('products.update')->middleware(['auth', 'isAdmin']);;
+    Route::delete('/{product}', [ProductController::class, 'destroy'])->name('products.destroy')->middleware(['auth', 'isAdmin']);;
 });
 
 Route::prefix('images')->group(function () {
