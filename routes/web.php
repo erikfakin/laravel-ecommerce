@@ -1,14 +1,15 @@
 <?php
 
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\ImageController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\ImageController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [ProductController::class, 'index'])->name('products.index');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -31,24 +32,35 @@ Route::prefix('products')->group(function () {
     Route::delete('/{product}', [ProductController::class, 'destroy'])->name('products.destroy')->middleware(['auth', 'isAdmin']);;
 });
 
-Route::prefix('images')->group(function () {
-    Route::get('/', [ImageController::class, 'index'])->name('images.index');
-    Route::get('/create', [ImageController::class, 'create'])->name('images.create');
-    Route::post('/', [ImageController::class, 'store'])->name('images.store');
-    Route::get('/{product}', [ImageController::class, 'show'])->name('images.show');
-    Route::get('/edit/{product}', [ImageController::class, 'edit'])->name('images.edit');
-    Route::put('/{product}', [ImageController::class, 'update'])->name('images.update');
-    Route::delete('/{product}', [ImageController::class, 'destroy'])->name('images.destroy');
-});
+Route::prefix('dashboard')->group(function () {
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
+    Route::get('/products', [DashboardController::class, 'products'])->name('dashboard.products');
+    Route::get('/categories', [DashboardController::class, 'categories'])->name('dashboard.categories');
+    Route::get('/orders', [DashboardController::class, 'orders'])->name('dashboard.orders');
+})->middleware(['auth', 'isAdmin']);
 
 Route::prefix('categories')->group(function () {
-    Route::get('/', [CategoryController::class, 'index'])->name('categories.index');
     Route::get('/create', [CategoryController::class, 'create'])->name('categories.create');
     Route::post('/', [CategoryController::class, 'store'])->name('categories.store');
-    Route::get('/{product}', [CategoryController::class, 'show'])->name('categories.show');
-    Route::get('/edit/{product}', [CategoryController::class, 'edit'])->name('categories.edit');
-    Route::put('/{product}', [CategoryController::class, 'update'])->name('categories.update');
-    Route::delete('/{product}', [CategoryController::class, 'destroy'])->name('categories.destroy');
-});
+    Route::get('/edit/{category}', [CategoryController::class, 'edit'])->name('categories.edit');
+    Route::put('/{category}', [CategoryController::class, 'update'])->name('categories.update');
+    Route::delete('/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+})->middleware(['auth', 'isAdmin']);
 
+
+Route::prefix('cart')->group(
+    function () {
+        Route::post('/add', [CartController::class, 'add'])->name('cart.add');
+        Route::post('/remove', [CartController::class, 'remove'])->name('cart.remove');
+        Route::get('/', [CartController::class, 'index'])->name('cart.index');
+    }
+);
+
+Route::prefix('orders')->group(
+    function () {
+        Route::get('/create', [OrderController::class, 'create'])->name('orders.create');
+        Route::post('/', [OrderController::class, 'store'])->name('orders.store');
+        Route::get('/{order}', [OrderController::class, 'show'])->name('orders.show');
+    }
+);
 require __DIR__ . '/auth.php';

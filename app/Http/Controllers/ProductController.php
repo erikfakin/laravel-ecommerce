@@ -64,7 +64,7 @@ class ProductController extends Controller
             'category_id' => $request->category,
         ]);
 
-        return redirect()->route('products.index')->with('success', 'Proizvod kreiran uspiješno.');
+        return redirect()->route('dashboard.products')->with('success', 'Proizvod kreiran uspiješno.');
     }
 
     /**
@@ -111,7 +111,7 @@ class ProductController extends Controller
         }
 
         $product->save();
-        return redirect()->route('products.index')->with('success', 'Proizvod uređen uspiješno.');
+        return redirect()->route('dashboard.products')->with('success', 'Proizvod uređen uspiješno.');
     }
 
     /**
@@ -120,6 +120,6 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $product->delete();
-        return redirect()->route('products.index')->with('success', 'Proizvod izbrisan.');
+        return redirect()->route('dashboard.products')->with('success', 'Proizvod izbrisan.');
     }
 }

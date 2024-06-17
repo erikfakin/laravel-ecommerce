@@ -26,13 +26,13 @@
 
                 </span>
 
-                <form class="flex-1" method="POST" action={{ route('products.destroy', $id) }}>
+                <form class="flex-1" method="POST" action={{ route('categories.destroy', $id) }}>
                     @csrf
                     @method('DELETE')
 
-                    <strong class="block font-medium text-gray-900"> Želite li obrisati proizvod: </strong>
+                    <strong class="block font-medium text-gray-900"> Želite li obrisati kategoriju?</strong>
 
-                    <p class="mt-1 text-sm text-gray-700">Jednom kada obrišete prizvod nećete ga moći vratit.</p>
+                    <p class="mt-1 text-sm text-gray-700">Jednom kada obrišete kategoriju nećete ju moći vratit.</p>
 
                     <div class="mt-4 flex gap-2">
                         <button type="submit"

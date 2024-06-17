@@ -932,7 +932,7 @@ file - resources\views\components\products\card.blade.php
         </p>
 
         <form class="mt-4">
-            <button class="block w-full rounded bg-yellow-400 p-4 text-sm font-medium transition hover:scale-105">
+            <button class="block w-full rounded bg-indigo-400 p-4 text-sm font-medium transition hover:scale-105">
                 Dodaj u košaricu
             </button>
         </form>
@@ -1516,5 +1516,8 @@ Route::prefix('products')->group(function () {
 });
 ```
 
-Sada ako nismo logirani kao admin nećemo moći pristupiti formama za kreiranje, uređivanje niti nećemo moći preko pristupiti s post metodama rutama `/store`, `/update` i `/destroy`.
+Sada ako nismo ulogirani kao admin nećemo moći pristupiti formama za kreiranje, uređivanje niti nećemo moći preko post metodama rutama `/store`, `/update` i `/destroy`.
 
+### Dashboard
+
+Bilo bi zgodno u dashboard dodati sekciju za uređivanje proizvoda.
