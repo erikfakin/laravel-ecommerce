@@ -1,7 +1,7 @@
-# Ecommerce aplikacija u Laravelu - Tutorial
+# Ecommerce aplikacija u Laravelu
 
-Ovo je tutorial za izradu jednostavnu ecommerce aplikaciju. 
-Tutorial ću napisati korak po korak, objašnjavajući svoje razmišljanje. Bit će to samo jedan način na kojem se stvari mogu riješiti, slobodno prilagodite korake svom načinu rada i razmišljanja. 
+Ovo je vodić za izradu jednostavnu ecommerce aplikaciju. 
+Vodić ću napisati korak po korak, objašnjavajući svoje razmišljanje. Bit će to samo jedan način na kojem se stvari mogu riješiti, slobodno prilagodite korake svom načinu rada i razmišljanja. 
 ___
 
 ## Funkcijonalnosti
