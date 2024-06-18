@@ -22,7 +22,7 @@ class CartController extends Controller
 
         session()->put('cart', $cart);
 
-        return redirect()->route('cart.index')->with('success', 'Uspiješno ste dodali proizvod u košaricu');
+        return back()->with('success', 'Uspiješno ste dodali proizvod u košaricu');
     }
 
     public function remove(Request $request)
@@ -36,7 +36,7 @@ class CartController extends Controller
         }
 
 
-        return redirect()->route('cart.index')->with('success', 'Uspiješno ste izbrisali proizvod iz košarice');
+        return back()->with('success', 'Uspiješno ste izbrisali proizvod iz košarice');
     }
 
     public function index()

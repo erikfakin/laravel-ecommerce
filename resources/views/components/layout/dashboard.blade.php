@@ -76,7 +76,7 @@
         </div>
     @endif
 
-    <x-header />
+    <x-layout.header />
 
 
 

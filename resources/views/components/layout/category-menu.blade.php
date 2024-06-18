@@ -13,7 +13,7 @@
             </span>
         </summary>
 
-        <ul class="mt-2 space-y-1 px-4 absolute bg-white shadow-xl">
+        <ul class="mt-2 space-y-1 p-4 absolute bg-white shadow-xl">
             @foreach ($categories as $category)
                 <li>
                     <a href="{{ route('products.category', $category->slug) }}"

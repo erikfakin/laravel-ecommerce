@@ -1,6 +1,6 @@
 <div class="relative" x-data="{ open: false }" x-on:mouseenter="open = true" x-on:mouseleave="open = false">
     <div class="inline-flex items-center overflow-hidden rounded-xl bg-white">
-        <a href="#"
+        <a href="{{ route('cart.index') }}"
             class="flex items-center gap-3 px-8 py-4 text-sm/none text-gray-600 hover:bg-gray-50 hover:text-gray-700">
             Košarica ({{ number_format($total, 2) }} €)
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"

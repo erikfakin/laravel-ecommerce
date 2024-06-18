@@ -13,7 +13,9 @@
             <nav aria-label="Global" class="hidden md:block">
                 <ul class="flex items-center gap-6 text-sm">
                     <li>
-                        <a class="text-gray-500 transition hover:text-gray-500/75" href="/products"> Proizvodi </a>
+                        <a class="rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition"
+                            href="{{ route('products.index') }}">
+                            Proizvodi </a>
                     </li>
                     <x-layout.CategoryMenu />
                 </ul>

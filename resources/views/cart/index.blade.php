@@ -37,7 +37,8 @@
                                             alt="{{ $cartItem->image->alt }}" class="size-16 rounded object-contain" />
                                     </td>
                                     <td class="whitespace-nowrap px-4 py-2 text-gray-700">
-                                        <h3 class="text-sm text-gray-900">{{ $cartItem->name }}</h3>
+                                        <a href="{{ route('products.show', $cartItem->id) }}"
+                                            class="underline text-sm text-gray-900">{{ $cartItem->name }}</a>
                                     </td>
                                     <td class="whitespace-nowrap px-4 py-2 text-gray-700">
                                         {{ number_format($cartItem->price, 2, '.', '') }} €</td>
