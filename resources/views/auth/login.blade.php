@@ -4,10 +4,10 @@
 
     <form method="POST" action="{{ route('login') }}">
 
-        admin user:
+        <p>admin user:</p>  
 
-        username: admin@admin
-        password: password
+        <p>email: admin@admin</p>
+        <p class="mb-8">password: password</p>
 
         @csrf
 
