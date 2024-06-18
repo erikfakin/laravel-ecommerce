@@ -30,4 +30,10 @@ class DashboardController extends Controller
         $orders = Order::where('user_id', Auth::id())->get();
         return view('dashboard.orders', compact('orders'));
     }
+
+    public function orders_all()
+    {
+        $orders = Order::paginate(24);
+        return view('dashboard.orders-all', compact('orders'));
+    }
 }

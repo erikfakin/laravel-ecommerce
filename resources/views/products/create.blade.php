@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-layout.dashboard>
     <x-slot:header>
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             Dodaj novi proizvod
@@ -76,4 +76,4 @@
                 </a>
         </form>
     </div>
-</x-app-layout>
+</x-layout.dashboard>

@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-layout.dashboard>
     <x-slot:header>
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             Uredi proizvod: {{ $product->name }}
@@ -48,7 +48,7 @@
             <div>
                 <label for="image" class="block font-medium text-gray-700"> Slika proizvoda </label>
 
-                <input type="file" id="image" name="image" required
+                <input type="file" id="image" name="image"
                     class="mt-1 w-full rounded-md border-gray-200 shadow-sm " />
                 @error('image')
                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
@@ -85,4 +85,4 @@
                 </a>
         </form>
     </div>
-</x-app-layout>
+</x-layout.dashboard>

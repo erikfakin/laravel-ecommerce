@@ -33,11 +33,12 @@ Route::prefix('products')->group(function () {
 });
 
 Route::prefix('dashboard')->group(function () {
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index');
-    Route::get('/products', [DashboardController::class, 'products'])->name('dashboard.products');
-    Route::get('/categories', [DashboardController::class, 'categories'])->name('dashboard.categories');
-    Route::get('/orders', [DashboardController::class, 'orders'])->name('dashboard.orders');
-})->middleware(['auth', 'isAdmin']);
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard.index')->middleware(['auth']);
+    Route::get('/products', [DashboardController::class, 'products'])->name('dashboard.products')->middleware(['auth', 'isAdmin']);
+    Route::get('/categories', [DashboardController::class, 'categories'])->name('dashboard.categories')->middleware(['auth', 'isAdmin']);
+    Route::get('/orders', [DashboardController::class, 'orders'])->name('dashboard.orders')->middleware(['auth']);
+    Route::get('/orders-all', [DashboardController::class, 'orders_all'])->name('dashboard.allOrders')->middleware(['auth', 'isAdmin']);
+});
 
 Route::prefix('categories')->group(function () {
     Route::get('/create', [CategoryController::class, 'create'])->name('categories.create');

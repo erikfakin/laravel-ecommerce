@@ -67,27 +67,19 @@
                         </thead>
 
                         <tbody class="divide-y divide-gray-200">
+                            <tr>
+                                <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                                    {{ $order->buyer_name }}
+                                </td>
+                                <td class="whitespace-nowrap px-4 py-2 text-gray-700">
+                                    {{ $order->buyer_address }}
+                                </td>
+                                <td class="whitespace-nowrap px-4 py-2 text-gray-700">
+                                    {{ $order->buyer_email }}</td>
+                                <td class="whitespace-nowrap px-4 py-2 text-gray-700">
+                                    {{ $order->buyer_phone }}</td>
 
-
-
-                            @foreach ($order->products as $product)
-                                <tr>
-                                    <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                                        {{ $order->buyer_name }}
-                                    </td>
-                                    <td class="whitespace-nowrap px-4 py-2 text-gray-700">
-                                        {{ $order->buyer_address }}
-                                    </td>
-                                    <td class="whitespace-nowrap px-4 py-2 text-gray-700">
-                                        {{ $order->buyer_email }}</td>
-                                    <td class="whitespace-nowrap px-4 py-2 text-gray-700">
-                                        {{ $order->buyer_phone }}</td>
-
-                                </tr>
-                            @endforeach
-
-
-
+                            </tr>
                         </tbody>
                     </table>
 

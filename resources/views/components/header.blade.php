@@ -1,6 +1,6 @@
 <header class="bg-white z-10">
     <div class="mx-auto flex h-16 max-w-screen-xl items-center gap-8 px-4 sm:px-6 lg:px-8">
-        <a class="block text-teal-600" href="#">
+        <a class="block text-indigo-600" href="/">
             <span class="sr-only">Home</span>
             <svg class="h-8" viewBox="0 0 28 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -18,6 +18,7 @@
                     <x-layout.CategoryMenu />
                 </ul>
             </nav>
+            <x-layout.MiniCart />
 
             <div class="flex items-center gap-4">
                 <div class="sm:flex sm:gap-4">

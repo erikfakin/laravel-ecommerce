@@ -22,5 +22,11 @@
 
     </ul>
 
+    <div class="my-8 mx-8">
+        {{ $products->links() }}
+    </div>
+
+
+
 
 </x-app-layout>
